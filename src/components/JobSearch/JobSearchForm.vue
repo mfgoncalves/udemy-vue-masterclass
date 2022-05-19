@@ -8,13 +8,10 @@
         <label for="role-text-input" class="absolute left-0 -top-10"
           >Role</label
         >
-        <input
+        <TextInput
           id="role-text-input"
           v-model="role"
-          name="role"
-          type="text"
           placeholder="Software engineer"
-          class="w-full text-lg font-normal focus:outline-none"
         />
       </div>
     </div>
@@ -28,13 +25,10 @@
       <label for="location-text-input" class="absolute left-0 -top-10"
         >Where?</label
       >
-      <input
+      <TextInput
         id="location-text-input"
         v-model="location"
-        name="location"
-        type="text"
         placeholder="Los Angeles"
-        class="w-full text-lg font-normal focus:outline-none"
       />
     </div>
 
@@ -44,11 +38,13 @@
 
 <script>
 import ActionButton from "@/components/Shared/ActionButton.vue";
+import TextInput from "@/components/Shared/TextInput.vue";
 
 export default {
   name: "JobSearchForm",
   components: {
     ActionButton,
+    TextInput,
   },
   data() {
     return {
