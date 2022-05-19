@@ -1,6 +1,7 @@
 <template>
   <form
     class="flex items-center w-full h-12 mt-14 border border-solid border-brand-gray-3 rounded-3xl"
+    @submit.prevent="searchForJobs"
   >
     <FontAwesomeIcon class="ml-4 mr-3" :icon="['fas', 'search']" />
     <div class="flex flex-nowrap flex-1 h-full text-base font-light">
@@ -12,6 +13,7 @@
           id="role-text-input"
           v-model="role"
           placeholder="Software engineer"
+          data-test="role-input"
         />
       </div>
     </div>
@@ -29,10 +31,16 @@
         id="location-text-input"
         v-model="location"
         placeholder="Los Angeles"
+        data-test="location-input"
       />
     </div>
 
-    <ActionButton text="Search" type="secondary" class="rounded-r-3xl" />
+    <ActionButton
+      text="Search"
+      type="secondary"
+      class="rounded-r-3xl"
+      data-test="form-submit-button"
+    />
   </form>
 </template>
 
@@ -51,6 +59,17 @@ export default {
       role: "",
       location: "",
     };
+  },
+  methods: {
+    searchForJobs() {
+      this.$router.push({
+        name: "JobResults",
+        query: {
+          role: this.role,
+          location: this.location,
+        },
+      });
+    },
   },
 };
 </script>
