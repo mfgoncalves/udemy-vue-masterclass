@@ -1,8 +1,5 @@
 <template>
-  <div class="about">
-    <h1>JobResultsView</h1>
-    <button @click="goToHome">Home Page</button>
-  </div>
+  <div>a</div>
 </template>
 
 <script>
