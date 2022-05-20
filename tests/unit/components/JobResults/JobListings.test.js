@@ -33,7 +33,9 @@ describe("JobListings", () => {
 
   it("fetches jos", () => {
     shallowMount(JobListings, createConfig(createRoute()));
-    expect(axios.get).toHaveBeenCalledWith("http://localhost:3000/jobs");
+    expect(axios.get).toHaveBeenCalledWith(
+      `${process.env.VUE_APP_API_URL}/jobs`
+    );
   });
 
   it("creates a job listing for a maximum of 10 jobs", async () => {
