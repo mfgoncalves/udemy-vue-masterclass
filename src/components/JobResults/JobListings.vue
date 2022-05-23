@@ -35,16 +35,12 @@
 
 <script>
 import JobListing from "@/components/JobResults/JobListing.vue";
-import axios from "axios";
+import { mapState, mapActions } from "vuex";
+import { FETCH_JOBS } from "@/store";
 
 export default {
   name: "JobListings",
   components: { JobListing },
-  data() {
-    return {
-      jobs: [],
-    };
-  },
   computed: {
     paginatedJobs() {
       return this.jobs.slice(
@@ -70,10 +66,13 @@ export default {
         ? nextPage
         : undefined;
     },
+    ...mapState(["jobs"]),
   },
   async mounted() {
-    const response = await axios.get(`${process.env.VUE_APP_API_URL}/jobs`);
-    this.jobs = response.data;
+    this[FETCH_JOBS]();
+  },
+  methods: {
+    ...mapActions([FETCH_JOBS]),
   },
 };
 </script>
