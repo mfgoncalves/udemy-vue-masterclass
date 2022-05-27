@@ -43,7 +43,7 @@ describe("Spotlight", () => {
   });
 
   it("provides title attribute to parent component", async () => {
-    mockSpotlightResponse({ img: "this is a title" });
+    mockSpotlightResponse({ title: "this is a title" });
     const wrapper = mount(
       Spotlight,
       createConfig("<h1>{{ slotProps.title }}</h1>")
@@ -53,7 +53,7 @@ describe("Spotlight", () => {
   });
 
   it("provides description attribute to parent component", async () => {
-    mockSpotlightResponse({ img: "test-description" });
+    mockSpotlightResponse({ description: "test-description" });
     const wrapper = mount(
       Spotlight,
       createConfig("<h1>{{ slotProps.description }}</h1>")
