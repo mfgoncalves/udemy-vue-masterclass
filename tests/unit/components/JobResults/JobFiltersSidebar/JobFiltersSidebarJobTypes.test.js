@@ -2,10 +2,11 @@ import JobFiltersSidebarJobTypes from "@/components/JobResults/JobFiltersSidebar
 import { mount } from "@vue/test-utils";
 
 describe("JobFiltersSidebarJobTypes", () => {
-  const createConfig = ($store) => ({
+  const createConfig = ($store, $router) => ({
     global: {
       mocks: {
         $store,
+        $router,
       },
       stubs: {
         FontAwesomeIcon: true,
@@ -19,8 +20,14 @@ describe("JobFiltersSidebarJobTypes", () => {
         UNIQUE_JOB_TYPES: new Set(["Full-time", "Part-time", "Intern"]),
       },
     };
+    const $router = {
+      push: jest.fn(),
+    };
 
-    const wrapper = mount(JobFiltersSidebarJobTypes, createConfig($store));
+    const wrapper = mount(
+      JobFiltersSidebarJobTypes,
+      createConfig($store, $router)
+    );
 
     const clickableArea = wrapper.find("[data-test='clickable-area']");
     await clickableArea.trigger("click");
@@ -31,25 +38,60 @@ describe("JobFiltersSidebarJobTypes", () => {
     expect(jobTypes).toEqual(["Full-time", "Part-time", "Intern"]);
   });
 
-  it("communicates that user has selected checkbox for job type", async () => {
-    const commit = jest.fn();
-    const $store = {
-      getters: {
-        UNIQUE_JOB_TYPES: new Set(["Full-time", "Part-time", "Intern"]),
-      },
-      commit,
-    };
+  describe("when user clicks checkbox", () => {
+    it("communicates that user has selected checkbox for job type", async () => {
+      const commit = jest.fn();
+      const $store = {
+        getters: {
+          UNIQUE_JOB_TYPES: new Set(["Full-time", "Part-time", "Intern"]),
+        },
+        commit,
+      };
+      const $router = {
+        push: jest.fn(),
+      };
 
-    const wrapper = mount(JobFiltersSidebarJobTypes, createConfig($store));
+      const wrapper = mount(
+        JobFiltersSidebarJobTypes,
+        createConfig($store, $router)
+      );
 
-    const clickableArea = wrapper.find("[data-test='clickable-area']");
-    await clickableArea.trigger("click");
+      const clickableArea = wrapper.find("[data-test='clickable-area']");
+      await clickableArea.trigger("click");
 
-    const googleInput = wrapper.find("[data-test='Full-time']");
-    await googleInput.setChecked();
+      const googleInput = wrapper.find("[data-test='Full-time']");
+      await googleInput.setChecked();
 
-    expect(commit).toHaveBeenCalledWith("ADD_SELECTED_JOB_TYPES", [
-      "Full-time",
-    ]);
+      expect(commit).toHaveBeenCalledWith("ADD_SELECTED_JOB_TYPES", [
+        "Full-time",
+      ]);
+    });
+    it("navigates user to job results page to see fresh batch of filtered jobs", async () => {
+      const commit = jest.fn();
+      const $store = {
+        getters: {
+          UNIQUE_JOB_TYPES: new Set(["Full-time", "Part-time", "Intern"]),
+        },
+        commit,
+      };
+      const $router = {
+        push: jest.fn(),
+      };
+
+      const wrapper = mount(
+        JobFiltersSidebarJobTypes,
+        createConfig($store, $router)
+      );
+
+      const clickableArea = wrapper.find("[data-test='clickable-area']");
+      await clickableArea.trigger("click");
+
+      const googleInput = wrapper.find("[data-test='Full-time']");
+      await googleInput.setChecked();
+
+      expect($router.push).toHaveBeenCalledWith({
+        name: "JobResults",
+      });
+    });
   });
 });
