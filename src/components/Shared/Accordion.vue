@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import { ref, computed } from "vue";
+
 export default {
   name: "Accordion",
   props: {
@@ -26,20 +28,22 @@ export default {
       required: true,
     },
   },
-  data() {
-    return {
-      isOpen: false,
+  setup() {
+    const isOpen = ref(false);
+
+    const toggleOpen = () => {
+      isOpen.value = !isOpen.value;
     };
-  },
-  computed: {
-    caretIcon() {
-      return this.isOpen ? ["fas", "angle-up"] : ["fas", "angle-down"];
-    },
-  },
-  methods: {
-    toggleOpen() {
-      this.isOpen = !this.isOpen;
-    },
+
+    const caretIcon = computed(() =>
+      isOpen.value ? ["fas", "angle-up"] : ["fas", "angle-down"]
+    );
+
+    return {
+      toggleOpen,
+      isOpen,
+      caretIcon,
+    };
   },
 };
 </script>
