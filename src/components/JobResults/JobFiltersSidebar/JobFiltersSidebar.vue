@@ -9,6 +9,7 @@
           <ActionButton text="Clear filters" type="secondary" />
         </div>
       </div>
+      <JobFiltersSidebarJobTypes />
       <JobFiltersSidebarOrganizations />
     </section>
   </div>
@@ -17,9 +18,14 @@
 <script>
 import ActionButton from "@/components/Shared/ActionButton.vue";
 import JobFiltersSidebarOrganizations from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarOrganizations.vue";
+import JobFiltersSidebarJobTypes from "./JobFiltersSidebarJobTypes.vue";
 
 export default {
   name: "JobFiltersSidebar",
-  components: { ActionButton, JobFiltersSidebarOrganizations },
+  components: {
+    ActionButton,
+    JobFiltersSidebarOrganizations,
+    JobFiltersSidebarJobTypes,
+  },
 };
 </script>

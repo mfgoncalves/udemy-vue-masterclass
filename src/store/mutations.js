@@ -1,4 +1,5 @@
 import {
+  ADD_SELECTED_JOB_TYPES,
   ADD_SELECTED_ORGANIZATIONS,
   LOGIN_USER,
   RECEIVE_JOBS,
@@ -13,6 +14,9 @@ const mutations = {
   },
   [ADD_SELECTED_ORGANIZATIONS](state, organizations) {
     state.selectedOrganizations = organizations;
+  },
+  [ADD_SELECTED_JOB_TYPES](state, jobTypes) {
+    state.selectedJobTypes = jobTypes;
   },
 };
 
