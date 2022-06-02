@@ -9,7 +9,16 @@
           <ActionButton text="Clear filters" type="secondary" />
         </div>
       </div>
-      <JobFiltersSidebarJobTypes />
+      <JobFiltersSidebarCheckboxGroup
+        header="Organizations"
+        :mutation="ADD_SELECTED_ORGANIZATIONS"
+        :unique-values="uniqueOrganizations"
+      />
+      <JobFiltersSidebarCheckboxGroup
+        header="Job Types"
+        :mutation="ADD_SELECTED_JOB_TYPES"
+        :unique-values="uniqueJobTypes"
+      />
       <JobFiltersSidebarOrganizations />
     </section>
   </div>
@@ -17,15 +26,29 @@
 
 <script>
 import ActionButton from "@/components/Shared/ActionButton.vue";
-import JobFiltersSidebarOrganizations from "@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarOrganizations.vue";
-import JobFiltersSidebarJobTypes from "./JobFiltersSidebarJobTypes.vue";
+import JobFiltersSidebarCheckboxGroup from "./JobFiltersSidebarCheckboxGroup.vue";
+import { useUniqueJobTypes, useUniqueOrganizations } from "@/store/composables";
+import {
+  ADD_SELECTED_ORGANIZATIONS,
+  ADD_SELECTED_JOB_TYPES,
+} from "@/store/constants";
 
 export default {
   name: "JobFiltersSidebar",
   components: {
     ActionButton,
-    JobFiltersSidebarOrganizations,
-    JobFiltersSidebarJobTypes,
+    JobFiltersSidebarCheckboxGroup,
+  },
+  setup() {
+    const uniqueOrganizations = useUniqueOrganizations();
+    const uniqueJobTypes = useUniqueJobTypes();
+
+    return {
+      uniqueOrganizations,
+      uniqueJobTypes,
+      ADD_SELECTED_JOB_TYPES,
+      ADD_SELECTED_ORGANIZATIONS,
+    };
   },
 };
 </script>
