@@ -1,4 +1,4 @@
-import Accordion from "@/components/Shared/Accordion";
+import Accordion from "@/components/Shared/Accordion.vue";
 import { mount } from "@vue/test-utils";
 
 describe("Accordion", () => {
