@@ -52,7 +52,6 @@ export default {
     return {
       uniqueJobTypes,
       selectJobType,
-      ADD_SELECTED_JOB_TYPES,
       selectedJobTypes,
     };
   },
