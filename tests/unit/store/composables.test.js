@@ -2,6 +2,7 @@ import { useStore } from "vuex";
 jest.mock("vuex");
 
 import {
+  useFetchJobsAction,
   useFilteredJobs,
   useUniqueJobTypes,
   useUniqueOrganizations,
@@ -47,6 +48,19 @@ describe("composables", () => {
       const result = useUniqueOrganizations();
 
       expect(result.value).toEqual(new Set(["Google"]));
+    });
+  });
+
+  describe("useFetchJobsAction", () => {
+    it("sends call to fetch jobs from API", () => {
+      const dispatch = jest.fn();
+      useStore.mockReturnValue({
+        dispatch,
+      });
+
+      useFetchJobsAction();
+
+      expect(dispatch).toHaveBeenCalledWith("FETCH_JOBS");
     });
   });
 });

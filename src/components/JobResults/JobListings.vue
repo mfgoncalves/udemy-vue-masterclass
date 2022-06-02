@@ -35,44 +35,41 @@
 
 <script>
 import JobListing from "@/components/JobResults/JobListing.vue";
-import { mapActions, mapGetters } from "vuex";
-import { FETCH_JOBS, FILTERED_JOBS } from "@/store/constants";
+import { computed, onMounted } from "vue";
+import { useFilteredJobs, useFetchJobsAction } from "@/store/composables";
+import useCurrentPage from "@/composables/useCurrentPage";
+import usePreviousAndNextPages from "@/composables/usePreviousAndNextPages";
 
 export default {
   name: "JobListings",
   components: { JobListing },
-  computed: {
-    ...mapGetters([FILTERED_JOBS]),
-    paginatedJobs() {
-      return this[FILTERED_JOBS].slice(
-        (this.currentPage - 1) * 10,
-        this.currentPage * 10
-      );
-    },
-    currentPage() {
-      const pageString = this.$route.query.page || "1";
-      let pageNumber = Number.parseInt(pageString);
-      if (isNaN(pageNumber) || pageNumber < 1) {
-        pageNumber = 1;
-      }
-      return pageNumber;
-    },
-    previousPage() {
-      const previousPage = this.currentPage - 1;
-      return previousPage >= 1 ? previousPage : undefined;
-    },
-    nextPage() {
-      const nextPage = this.currentPage + 1;
-      return nextPage <= Math.ceil(this[FILTERED_JOBS].length / 10)
-        ? nextPage
-        : undefined;
-    },
-  },
-  async mounted() {
-    this[FETCH_JOBS]();
-  },
-  methods: {
-    ...mapActions([FETCH_JOBS]),
+  setup() {
+    onMounted(useFetchJobsAction);
+
+    const filteredJobs = useFilteredJobs();
+
+    const currentPage = useCurrentPage();
+
+    const maxPage = computed(() => Math.ceil(filteredJobs.value.length / 10));
+
+    const { previousPage, nextPage } = usePreviousAndNextPages(
+      currentPage,
+      maxPage
+    );
+
+    const paginatedJobs = computed(() =>
+      filteredJobs.value.slice(
+        (currentPage.value - 1) * 10,
+        currentPage.value * 10
+      )
+    );
+
+    return {
+      paginatedJobs,
+      currentPage,
+      previousPage,
+      nextPage,
+    };
   },
 };
 </script>
