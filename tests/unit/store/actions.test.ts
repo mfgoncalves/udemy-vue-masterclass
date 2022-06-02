@@ -2,15 +2,16 @@ import getJobs from "@/api/getJobs";
 import actions from "@/store/actions";
 
 jest.mock("@/api/getJobs");
+const getJobsMock = getJobs as jest.Mock;
 
 describe("actions", () => {
   describe("FETCH_JOBS", () => {
     beforeEach(() => {
-      getJobs.mockResolvedValue([{ id: 1, title: "Software Developer" }]);
+      getJobsMock.mockResolvedValue([{ id: 1, title: "Software Developer" }]);
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      getJobsMock.mockClear();
     });
 
     it("makes request to fetch jobs", async () => {
