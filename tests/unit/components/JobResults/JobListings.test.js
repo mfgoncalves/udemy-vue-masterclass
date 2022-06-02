@@ -10,19 +10,6 @@ jest.mock("@/composables/useCurrentPage");
 jest.mock("@/composables/usePreviousAndNextPages");
 
 describe("JobListings", () => {
-  const createRoute = (queryParams = {}) => ({
-    query: {
-      page: "5",
-      ...queryParams,
-    },
-  });
-
-  const createStore = (config = {}) => ({
-    getters: { FILTERED_JOBS: Array(15).fill({}) },
-    dispatch: jest.fn(),
-    ...config,
-  });
-
   const createConfig = () => ({
     global: {
       stubs: {
