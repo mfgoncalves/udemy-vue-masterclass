@@ -1,4 +1,4 @@
-import HeaderContainer from "@/components/Shared/HeaderContainer";
+import HeaderContainer from "@/components/Shared/HeaderContainer.vue";
 import { mount } from "@vue/test-utils";
 
 describe("HeaderContainer", () => {
