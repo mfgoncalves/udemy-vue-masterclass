@@ -6,7 +6,7 @@ import {
   UNIQUE_JOB_TYPES,
   UNIQUE_ORGANIZATIONS,
 } from "@/store/constants";
-import { GlobalState } from "./types";
+import { GlobalState } from "@/store/types";
 
 const getters = {
   [UNIQUE_ORGANIZATIONS](state: GlobalState) {

@@ -3,9 +3,13 @@ import axios from "axios";
 
 jest.mock("axios");
 
+const axiosGetMock = axios.get as jest.Mock;
+
 describe("getJobs", () => {
   beforeEach(() => {
-    axios.get.mockResolvedValue({ data: [{ id: 1, title: "Java Engineer" }] });
+    axiosGetMock.mockResolvedValue({
+      data: [{ id: 1, title: "Java Engineer" }],
+    });
   });
 
   afterEach(() => {
@@ -14,7 +18,7 @@ describe("getJobs", () => {
 
   it("fetches jobs that candidates can apply to", async () => {
     await getJobs();
-    expect(axios.get).toHaveBeenCalledWith(
+    expect(axiosGetMock).toHaveBeenCalledWith(
       `${process.env.VUE_APP_API_URL}/jobs`
     );
   });

@@ -21,13 +21,15 @@
   </Accordion>
 </template>
 
-<script>
+<script lang="ts">
 import Accordion from "@/components/Shared/Accordion.vue";
 import { useStore } from "vuex";
 import { ref } from "@vue/reactivity";
 import { useRouter } from "vue-router";
+import { defineComponent } from "vue";
+import { key } from "@/store";
 
-export default {
+export default defineComponent({
   name: "JobFiltersSidebarCheckboxGroup",
   components: { Accordion },
   props: {
@@ -45,10 +47,10 @@ export default {
     },
   },
   setup(props) {
-    const store = useStore();
+    const store = useStore(key);
     const router = useRouter();
 
-    const selectedValues = ref([]);
+    const selectedValues = ref<string[]>([]);
 
     const selectValue = () => {
       store.commit(props.mutation, selectedValues.value);
@@ -60,5 +62,5 @@ export default {
       selectValue,
     };
   },
-};
+});
 </script>
