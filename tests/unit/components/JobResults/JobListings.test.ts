@@ -1,6 +1,10 @@
 import JobListings from "@/components/JobResults/JobListings.vue";
 import { shallowMount, flushPromises, RouterLinkStub } from "@vue/test-utils";
-import { useFilteredJobs, useFetchJobsAction } from "@/store/composables";
+import {
+  useFilteredJobs,
+  useFetchJobsAction,
+  useFetchDegreesAction,
+} from "@/store/composables";
 import useCurrentPage from "@/composables/useCurrentPage";
 import usePreviousAndNextPages from "@/composables/usePreviousAndNextPages";
 import { ref } from "vue";
@@ -34,6 +38,18 @@ describe("JobListings", () => {
       shallowMount(JobListings, createConfig());
 
       expect(useFetchJobsAction).toHaveBeenCalled();
+    });
+    it("makes call to fetch degrees from API", () => {
+      useFilteredJobsMock.mockReturnValue({ value: [] });
+      useCurrentPageMock.mockReturnValue({ value: 1 });
+      usePreviousAndNextPagesMock.mockReturnValue({
+        previousPage: undefined,
+        nextPage: 2,
+      });
+
+      shallowMount(JobListings, createConfig());
+
+      expect(useFetchDegreesAction).toHaveBeenCalled();
     });
   });
 

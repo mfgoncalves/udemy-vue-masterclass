@@ -1,5 +1,6 @@
 import { Job } from "@/api/types";
 import {
+  FETCH_DEGREES,
   FETCH_JOBS,
   FILTERED_JOBS,
   UNIQUE_DEGREES,
@@ -37,4 +38,9 @@ export const useUniqueDegrees = () => {
 export const useFetchJobsAction = () => {
   const store = useStore(key);
   store.dispatch(FETCH_JOBS);
+};
+
+export const useFetchDegreesAction = () => {
+  const store = useStore(key);
+  store.dispatch(FETCH_DEGREES);
 };

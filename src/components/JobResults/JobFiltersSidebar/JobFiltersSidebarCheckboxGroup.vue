@@ -26,7 +26,7 @@ import Accordion from "@/components/Shared/Accordion.vue";
 import { useStore } from "vuex";
 import { ref } from "@vue/reactivity";
 import { useRouter } from "vue-router";
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
 import { key } from "@/store";
 
 export default defineComponent({
@@ -38,7 +38,7 @@ export default defineComponent({
       required: true,
     },
     uniqueValues: {
-      type: Set,
+      type: [Array, Set] as PropType<string[] | Set<string>>,
       required: true,
     },
     mutation: {
