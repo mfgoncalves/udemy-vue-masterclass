@@ -1,4 +1,4 @@
-import { Job } from "@/api/types";
+import { Degree, Job } from "@/api/types";
 import state from "@/store/state";
 import { GlobalState } from "@/store/types";
 
@@ -20,5 +20,11 @@ export const createJob = (initial: Partial<Job> = {}): Job => ({
   preferredQualifications: [],
   description: [],
   dateAdded: "2021-07-04",
+  ...initial,
+});
+
+export const createDegree = (initial: Partial<Degree> = {}): Degree => ({
+  id: 1,
+  degree: "Master's",
   ...initial,
 });
