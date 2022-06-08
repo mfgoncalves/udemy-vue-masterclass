@@ -1,42 +1,35 @@
 <template>
-  <Accordion :header="header">
-    <div class="mt-5">
-      <fieldset>
-        <ul class="flex flex-row flex-wrap">
-          <li v-for="value in uniqueValues" :key="value" class="w-1/2 h-8">
-            <input
-              :id="value"
-              v-model="selectedValues"
-              :value="value"
-              type="checkbox"
-              class="mr-2"
-              :data-test="value"
-              @change="selectValue"
-            />
-            <label :for="value" data-test="value">{{ value }}</label>
-          </li>
-        </ul>
-      </fieldset>
-    </div>
-  </Accordion>
+  <div class="mt-5">
+    <fieldset>
+      <ul class="flex flex-row flex-wrap">
+        <li v-for="value in uniqueValues" :key="value" class="w-1/2 h-8">
+          <input
+            :id="value"
+            v-model="selectedValues"
+            :value="value"
+            type="checkbox"
+            class="mr-2"
+            :data-test="value"
+            @change="selectValue"
+          />
+          <label :for="value" data-test="value">{{ value }}</label>
+        </li>
+      </ul>
+    </fieldset>
+  </div>
 </template>
 
 <script lang="ts">
-import Accordion from "@/components/Shared/Accordion.vue";
 import { useStore } from "vuex";
 import { ref } from "@vue/reactivity";
 import { useRouter } from "vue-router";
 import { defineComponent, PropType } from "vue";
 import { key } from "@/store";
+import { CLEAR_USER_JOB_FILTERS_SELECTIONS } from "@/store/constants";
 
 export default defineComponent({
   name: "JobFiltersSidebarCheckboxGroup",
-  components: { Accordion },
   props: {
-    header: {
-      type: String,
-      required: true,
-    },
     uniqueValues: {
       type: [Array, Set] as PropType<string[] | Set<string>>,
       required: true,
@@ -51,6 +44,12 @@ export default defineComponent({
     const router = useRouter();
 
     const selectedValues = ref<string[]>([]);
+
+    store.subscribe((mutation) => {
+      if (mutation.type === CLEAR_USER_JOB_FILTERS_SELECTIONS) {
+        selectedValues.value = [];
+      }
+    });
 
     const selectValue = () => {
       store.commit(props.mutation, selectedValues.value);
